@@ -3,8 +3,11 @@ package com.ui_utils;
 import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditionType;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.client.MinecraftClient;
@@ -21,9 +24,11 @@ import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import com.ui_utils.mixin.accessor.ClientConnectionAccessor;
 
@@ -126,6 +131,21 @@ public class MainClient implements ClientModInitializer {
                 SharedVariables.storedScreenHandler = mc.player.currentScreenHandler;
             }
         }).width(115).position(5, 125).build());
+        screen.addDrawableChild(ButtonWidget.builder(Text.of("Gaming: "+SharedVariables.hookersAndCocaine), (button) -> {
+            // saves the current gui to a variable to be accessed later
+            SharedVariables.hookersAndCocaine = !SharedVariables.hookersAndCocaine;
+            button.setMessage(Text.of("Gaming: " + SharedVariables.hookersAndCocaine));
+            if (mc.player != null) {
+                mc.player.sendMessage(Text.of("FEIN"), false);
+
+
+
+
+
+
+
+            }
+        }).width(115).position(5, 275).build());
 
         // register "disconnect and send packets" button in all HandledScreens
         screen.addDrawableChild(ButtonWidget.builder(Text.of("Disconnect and send packets"), (button) -> {
@@ -448,12 +468,14 @@ public class MainClient implements ClientModInitializer {
                     throw new IllegalStateException("The current minecraft screen (mc.currentScreen) is null");
                 }
                 // fixes #137
-                mc.keyboard.setClipboard(Text.Serialization.toJsonString(mc.currentScreen.getTitle(), Objects.requireNonNull(MinecraftClient.getInstance().getServer()).getRegistryManager()));
+                assert MinecraftClient.getInstance().world != null;
+                mc.keyboard.setClipboard(Text.Serialization.toJsonString(mc.currentScreen.getTitle(),MinecraftClient.getInstance().world.getRegistryManager()));
             } catch (IllegalStateException e) {
                 LOGGER.error("Error while copying title JSON to clipboard", e);
             }
         }).width(115).position(5, 215).build());
     }
+
 
     @NotNull
     private static JButton getPacketOptionButton(String label) {
@@ -529,4 +551,8 @@ public class MainClient implements ClientModInitializer {
 
         return modMetadata != null ? modMetadata.getVersion().getFriendlyString() : "null";
     }
+
+
 }
+
+

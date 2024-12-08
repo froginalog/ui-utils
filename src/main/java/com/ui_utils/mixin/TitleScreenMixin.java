@@ -25,7 +25,7 @@ public class TitleScreenMixin extends Screen {
 
     @Inject(at = @At("RETURN"), method = "init")
     private void onInitWidgetsNormal(CallbackInfo ci) {
-        if (UpdateUtils.isOutdated) {
+        if (UpdateUtils.isOutdated && false) { //added && false to remove the update message cuz everyone hates it :3 -frog
             if (!UpdateUtils.messageShown) {
                 MinecraftClient client = MinecraftClient.getInstance();
                 ToastManager toastManager = client.getToastManager();

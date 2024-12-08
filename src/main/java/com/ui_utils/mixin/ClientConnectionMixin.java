@@ -4,6 +4,7 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.ButtonClickC2SPacket;
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +26,7 @@ public class ClientConnectionMixin {
         }
 
         // checks for if packets should be delayed and if the packet is a gui related packet and is added to a list
-        if (SharedVariables.delayUIPackets && (packet instanceof ClickSlotC2SPacket || packet instanceof ButtonClickC2SPacket)) {
+        if (SharedVariables.delayUIPackets && (packet instanceof ClickSlotC2SPacket || packet instanceof ButtonClickC2SPacket || packet instanceof ChatMessageC2SPacket)) {
             SharedVariables.delayedUIPackets.add(packet);
             ci.cancel();
         }

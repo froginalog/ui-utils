@@ -84,4 +84,5 @@ public class UpdateUtils {
         }
         MinecraftClient.getInstance().setScreen(new UpdateScreen(Text.empty()));
     }
+
 }

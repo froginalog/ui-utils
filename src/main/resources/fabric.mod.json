@@ -7,7 +7,8 @@
   "description": "Plugin debugging mod.",
   "authors": [
     "Coderx_Gamer",
-    "MrBreakNFix"
+    "MrBreakNFix",
+    "FrogInALog_ (get fucked)"
   ],
   "contact": {
     "homepage": "https://ui-utils.com",
@@ -33,7 +34,7 @@
   "depends": {
     "fabricloader": ">=0.16.9",
     "fabric": "*",
-    "minecraft": "~1.21.3",
+    "minecraft": "~1.21.1",
     "java": ">=17"
   },
 

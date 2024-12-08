@@ -16,7 +16,9 @@
     "SleepingChatScreenMixin",
     "TitleScreenMixin",
     "accessor.ClientConnectionAccessor",
-    "accessor.ScreenAccessor"
+    "accessor.ScreenAccessor",
+    "ItemMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1
